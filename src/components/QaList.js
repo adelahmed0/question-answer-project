@@ -1,10 +1,11 @@
 import { Accordion, Row } from "react-bootstrap";
 import { question } from "../data";
 
-const QaList = ({ data, deleteOneItem }) => {
+const QaList = ({ deleteOneItem }) => {
+  const dataLocal = JSON.parse(localStorage.getItem("items"));
   // to Delete one Item from array
   const onDeleteItem = (id) => {
-    if (data.length >= 1) {
+    if (localStorage.getItem("items") != null) {
       const index = question.findIndex((item) => item.id === id);
       question.splice(index, 1);
       deleteOneItem(question);
@@ -12,8 +13,8 @@ const QaList = ({ data, deleteOneItem }) => {
   };
   return (
     <Row>
-      {data.length >= 1 ? (
-        data.map((item, index) => {
+      {localStorage.getItem("items") != null ? (
+        dataLocal.map((item, index) => {
           return (
             <Accordion key={index}>
               <Accordion.Item eventKey={item.id}>

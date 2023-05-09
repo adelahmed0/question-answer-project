@@ -8,16 +8,22 @@ function App() {
   const [data, setData] = useState(question);
   // to add new item
   const addItem = () => {
+    localStorage.setItem("items", JSON.stringify([...question]));
     setData([...question]);
   };
   // to delete all data items
   const deleteAllItems = () => {
+    localStorage.removeItem("items");
     question.splice(0, question.length);
     setData([]);
   };
   // to delete one item from array
   const deleteOneItem = (items) => {
+    localStorage.setItem("items", JSON.stringify([...items]));
     setData([...items]);
+    if (items.length <= 0) {
+      deleteAllItems();
+    }
   };
   return (
     <div className="font text-center color-body">
@@ -29,7 +35,7 @@ function App() {
           <Col sm="8">
             <FormInput onAdd={addItem} />
             <QaList data={data} deleteOneItem={deleteOneItem} />
-            {data.length >= 1 ? (
+            {localStorage.getItem("items") != null ? (
               <button onClick={deleteAllItems} className="btn-color w-100 my-2">
                 مسح الكل
               </button>
