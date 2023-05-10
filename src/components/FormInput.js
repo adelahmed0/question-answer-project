@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import { Row, Form, Col } from "react-bootstrap";
 import { question } from "../data";
 
-const FormInput = ({ onAdd }) => {
+const FormInput = ({ onAdd, notify }) => {
   const [qu, setQu] = useState("");
   const [an, setAn] = useState("");
   // to push data to array
   const addNewItem = () => {
+    if (qu === "" || an === "") {
+      notify("من فضلك اكمل البيانات", "Error");
+      return;
+    }
     question.push({ id: Math.random(), q: qu, a: an });
     setQu("");
     setAn("");
